@@ -1,6 +1,7 @@
 package com;
 
 import com.model.Tokens;
+import com.model.User;
 import com.model.UserRegisterResponse;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -75,6 +76,45 @@ public class UserOperations {
                 .delete("auth/user")
                 .then()
                 .statusCode(202);
+    }
+
+    public User generateUser(){
+        User user = new User();
+        user.setEmail(RandomStringUtils.randomAlphabetic(10) + EMAIL_POSTFIX);
+        user.setPassword(RandomStringUtils.randomAlphabetic(10));
+        user.setName(RandomStringUtils.randomAlphabetic(10));
+        return user;
+    }
+
+    public Map<String, String> login(String email, String password) {
+        // создаём и заполняем мапу для передачи трех параметров в тело запроса
+        Map<String, String> inputDataMap = new HashMap<>();
+        inputDataMap.put("email", email);
+        inputDataMap.put("password", password);
+
+        // отправляем запрос на регистрацию пользователя и десериализуем ответ в переменную response
+        UserRegisterResponse response = given()
+                .spec(Base.getBaseSpec())
+                .and()
+                .body(inputDataMap)
+                .when()
+                .post("auth/login")
+                .body()
+                .as(UserRegisterResponse.class);
+
+        // возвращаем мапу с данными
+        Map<String, String> responseData = new HashMap<>();
+        if (response != null) {
+            responseData.put("email", response.getUser().getEmail());
+            responseData.put("password", password);
+
+            // токен, нужный для удаления пользователя, кладем в статическое поле класса с токенами
+            // убираем слово Bearer в начале токена
+            // так же запоминаем refreshToken
+            Tokens.setAccessToken(response.getAccessToken().substring(7));
+            Tokens.setRefreshToken(response.getRefreshToken());
+        }
+        return responseData;
     }
 
 }
