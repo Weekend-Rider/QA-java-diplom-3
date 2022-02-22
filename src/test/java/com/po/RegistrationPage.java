@@ -45,4 +45,11 @@ public class RegistrationPage {
     public void clickRegisterButton() {
         registerButton.click();
     }
+
+    //поиск элемента с тектом ошибки "некорректный пароль"
+    public SelenideElement getPasswordErrorMessage() {
+        return passwordErrorMessage;
+    }
+
+
 }

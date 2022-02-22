@@ -1,5 +1,6 @@
 package com;
 
+import com.model.Success;
 import com.model.Tokens;
 import com.model.User;
 import com.model.UserRegisterResponse;
@@ -58,6 +59,7 @@ public class UserOperations {
             Tokens.setAccessToken(response.getAccessToken().substring(7));
             Tokens.setRefreshToken(response.getRefreshToken());
         }
+        System.out.println(responseData);
         return responseData;
     }
 
@@ -113,6 +115,8 @@ public class UserOperations {
             // так же запоминаем refreshToken
             Tokens.setAccessToken(response.getAccessToken().substring(7));
             Tokens.setRefreshToken(response.getRefreshToken());
+
+            Success.setSuccess(response.isSuccess());
         }
         return responseData;
     }
