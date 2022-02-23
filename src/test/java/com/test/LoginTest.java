@@ -1,18 +1,12 @@
 package com.test;
 
 import com.UserOperations;
-import com.model.Success;
-import com.model.User;
-import com.po.HomePage;
-import com.po.RegistrationPage;
+import com.po.*;
 import org.junit.After;
 import org.junit.Test;
 
-import java.util.Map;
-
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.closeWebDriver;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
 import static org.junit.Assert.assertTrue;
 
 public class LoginTest {
@@ -20,76 +14,91 @@ public class LoginTest {
         UserOperations userOperations = new UserOperations();
 
         @After
-        public void closeStage() {
+        public void tearDown() {
+            userOperations.delete();
             closeWebDriver();
-            //userOperations.delete();
         }
 
         @Test
-        public void checkCustomerRegistrationTest() {
-            RegistrationPage registrationPage =
+        public void checkCustomerLoginByToAccountButtonTest() {
+
+            HomePage homePage =
                     open(HomePage.HOME_PAGE_URL,
-                            RegistrationPage.class);
+                            HomePage.class);
 
-            Map<String, String> userData = userOperations.register();
-            System.out.println(userData.get("password"));
-            System.out.println(userData.get("email"));
+            homePage.clickToAccountButton();
 
-            //System.out.println(userOperations.getEmail() + responseData.getPassword());
-            //registrationPage.fillRegistrationForm(credentials.getName(), credentials.getEmail(), credentials.getPassword());
-            //registrationPage.clickRegisterButton();
+            LoginPage loginPage = page(LoginPage.class);
+            String email = loginPage.fillLoginForm();
+            loginPage.clickLoginButton();
 
-            //userOperations.login(credentials.getEmail(), credentials.getPassword());
-            //assertTrue(Success.isSuccess());
+            homePage.clickHeaderAccountButton();
 
-            //open("https://qa-scooter.praktikum-services.ru/account"); //не канает, надо кликать кнопку ЛК
-            //String actualUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-            //assertEquals("https://qa-scooter.praktikum-services.ru/account", actualUrl);
+            AccountPage accountPage = page(AccountPage.class);
+            accountPage.getEmailField().shouldHave(value(email));
 
-            }
+        }
 
     @Test
-    public void checkIncorrectPasswordErrorTest() {
+    public void checkCustomerLoginByHeaderAccountButtonTest() {
+
+        HomePage homePage =
+                open(HomePage.HOME_PAGE_URL,
+                        HomePage.class);
+
+        homePage.clickHeaderAccountButton();
+
+        LoginPage loginPage = page(LoginPage.class);
+        String email = loginPage.fillLoginForm();
+        loginPage.clickLoginButton();
+
+        homePage.clickHeaderAccountButton();
+        AccountPage accountPage = page(AccountPage.class);
+        accountPage.getEmailField().shouldHave(value(email));
+
+    }
+
+    @Test
+    public void checkCustomerLoginByRegistrationPageLoginButtonTest() {
+
         RegistrationPage registrationPage =
                 open(RegistrationPage.REGISTRATION_PAGE_URL,
                         RegistrationPage.class);
 
-        User credentials = userOperations.generateUser();
+        registrationPage.clickLoginButton();
 
-        registrationPage.fillRegistrationForm(credentials.getName(), credentials.getEmail(), "123");
-        registrationPage.clickRegisterButton();
+        LoginPage loginPage = page(LoginPage.class);
+        String email = loginPage.fillLoginForm();
+        loginPage.clickLoginButton();
 
-        registrationPage.getPasswordErrorMessage().shouldBe(visible);
+        HomePage homePage = page(HomePage.class);
+        homePage.clickHeaderAccountButton();
 
-        //open("https://qa-scooter.praktikum-services.ru/account"); //не канает, надо кликать кнопку ЛК
-        //String actualUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-        //assertEquals("https://qa-scooter.praktikum-services.ru/account", actualUrl);
+        AccountPage accountPage = page(AccountPage.class);
+        accountPage.getEmailField().shouldHave(value(email));
 
     }
 
+    @Test
+    public void checkCustomerLoginByRestorePasswordPageLoginButtonTest() {
 
-/*
-        @Test
-        public void clickSamokatLogoOpensHomePage() {
-            HomePage homePage =
-                    open(HomePage.HOME_PAGE_URL,
-                            HomePage.class);
-            homePage.clickSamokatLogo();
-            String actualUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-            assertEquals("https://qa-scooter.praktikum-services.ru/", actualUrl);
-        }
+        RestorePasswordPage restorePasswordPage =
+                open(RestorePasswordPage.RESTORE_PASSWORD_PAGE_URL,
+                        RestorePasswordPage.class);
 
-        @Test
-        public void clickYandexLogoOpensNewTabWithYandex() {
-            HomePage homePage =
-                    open(HomePage.HOME_PAGE_URL,
-                            HomePage.class);
-            homePage.clickYandexLogo();
-            switchTo().window(1);
-            String actualUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-            assertEquals("https://yandex.ru/", actualUrl);
-        }
+        restorePasswordPage.clickLoginButton();
 
-    }*/
+        LoginPage loginPage = page(LoginPage.class);
+        String email = loginPage.fillLoginForm();
+        loginPage.clickLoginButton();
+
+        HomePage homePage = page(HomePage.class);
+        homePage.clickHeaderAccountButton();
+
+        AccountPage accountPage = page(AccountPage.class);
+        accountPage.getEmailField().shouldHave(value(email));
+
+    }
+
 
 }

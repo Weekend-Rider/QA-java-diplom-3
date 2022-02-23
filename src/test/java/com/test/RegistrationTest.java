@@ -19,9 +19,9 @@ public class RegistrationTest {
         UserOperations userOperations = new UserOperations();
 
         @After
-        public void closeStage() {
-            closeWebDriver();
+        public void tearDown() {
             userOperations.delete();
+            closeWebDriver();
         }
 
         @Test

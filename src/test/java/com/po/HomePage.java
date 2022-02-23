@@ -8,23 +8,70 @@ public class HomePage {
 
     public static final String HOME_PAGE_URL = "https://stellarburgers.nomoreparties.site";
 
-
-    //кнопка "Личный кабинет
+    //кнопка "Личный кабинет"
+    @FindBy(how = How.XPATH, using = ".//a[@href='/account']")
+    private SelenideElement headerAccountButton;
 
     //кнопка "Войти в аккаунт"
     @FindBy(how = How.CLASS_NAME, using = "button_button__33qZ0")
     private SelenideElement toAccountButton;
 
     //кнопка "Булки"
+    @FindBy(how = How.XPATH, using = ".//span[text()='Булки']//ancestor::div[contains(@class, 'tab_tab__1SPyG')]")
+    private SelenideElement bunsButton;
+
     //кнопка "Соусы"
+    @FindBy(how = How.XPATH, using = ".//span[text()='Соусы']//ancestor::div[contains(@class, 'tab_tab__1SPyG')]")
+    private SelenideElement saucesButton;
+
     //кнопка "Начинки"
-    //что-то идентифицирующее раздел "Булки"
-    //что-то идентифицирующее раздел "Соусы"
-    //что-то идентифицирующее раздел "Начинки"
+    @FindBy(how = How.XPATH, using = ".//span[text()='Начинки']//ancestor::div[contains(@class, 'tab_tab__1SPyG')]")
+    private SelenideElement ingredientsButton;
+
+    //заголовок раздела "Булки"
+    @FindBy(how = How.XPATH, using = ".//h2[contains(text(), 'Булки')]")
+    private SelenideElement bunsHeader;
+
+    //заголовок раздела "Соусы"
+    @FindBy(how = How.XPATH, using = ".//h2[contains(text(), 'Соусы')]")
+    private SelenideElement saucesHeader;
+
+    //заголовок раздела "Начинки"
+    @FindBy(how = How.XPATH, using = ".//h2[contains(text(), 'Начинки')]")
+    private SelenideElement ingredientsHeader;
 
     //клик по кнопке "Войти в аккаунт"
     public void clickToAccountButton() {
         toAccountButton.click();
     }
+
+    //клик по кнопке "Личный кабинет" в шапке
+    public void clickHeaderAccountButton() { headerAccountButton.click(); }
+
+    //клик по кнопке "Булки"
+    public void clickBunsButton() {
+        bunsButton.click();
+    }
+
+    //поиск заголовка "Булки"
+    public SelenideElement getBunsHeader() {
+        return bunsHeader;
+    }
+
+    //клик по кнопке "Соусы"
+    public void clickSaucesButton() {
+        saucesButton.click();
+    }
+
+    //поиск заголовка "Соусы"
+    public SelenideElement getSaucesHeader() {
+        return saucesHeader;
+    }
+
+    //клик по кнопке "Начинки"
+    public void clickIngredientsButton() { ingredientsButton.click(); }
+
+    //поиск заголовка "Начинки"
+    public SelenideElement getIngredientsHeader() { return ingredientsHeader; }
 
 }

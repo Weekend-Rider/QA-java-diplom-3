@@ -1,8 +1,11 @@
 package com.po;
 
+import com.UserOperations;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+
+import java.util.Map;
 
 public class LoginPage {
 
@@ -20,15 +23,34 @@ public class LoginPage {
     @FindBy(how = How.CLASS_NAME, using = "button_button__33qZ0")
     private SelenideElement loginButton;
 
+    //кнопка "Личный кабинет"
+    @FindBy(how = How.XPATH, using = ".//a[@href='/account']")
+    private SelenideElement headerAccountButton;
+
     //заполнение формы авторизации
-    public void fillLoginForm(String email, String password) {
-        emailInputField.setValue(email);
-        passwordInputField.setValue(password);
+    public String fillLoginForm() {
+
+        UserOperations userOperations = new UserOperations();
+
+        Map<String, String> userData = userOperations.register();
+
+        System.out.println(userData.get("password"));
+        System.out.println(userData.get("email"));
+
+        emailInputField.setValue(userData.get("email"));
+        passwordInputField.setValue(userData.get("password"));
+
+        return userData.get("email");
     }
 
     //клик по кнопке "Войти"
     public void clickLoginButton() {
         loginButton.click();
+    }
+
+    //клик по кнопке "Личный кабинет"
+    public void clickHeaderAccountButton() {
+        headerAccountButton.click();
     }
 
 }

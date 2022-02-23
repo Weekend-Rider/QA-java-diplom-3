@@ -36,6 +36,7 @@ public class RegistrationPage {
 
     //заполнение формы регистрации
     public void fillRegistrationForm(String name, String email, String password) {
+
         nameInputField.setValue(name);
         emailInputField.setValue(email);
         passwordInputField.setValue(password);
@@ -46,9 +47,14 @@ public class RegistrationPage {
         registerButton.click();
     }
 
-    //поиск элемента с тектом ошибки "некорректный пароль"
+    //поиск элемента с текстом ошибки "некорректный пароль"
     public SelenideElement getPasswordErrorMessage() {
         return passwordErrorMessage;
+    }
+
+    //клик по кнопке "Войти"
+    public void clickLoginButton() {
+        loginButton.click();
     }
 
 
