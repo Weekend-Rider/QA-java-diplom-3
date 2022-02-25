@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.Point;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -23,10 +25,9 @@ public class ConstructorTest {
                     open(HomePage.HOME_PAGE_URL,
                             HomePage.class);
 
-            homePage.clickSaucesButton();
-            homePage.getSaucesHeader().hover();
+            homePage.clickIngredientsButton();
             homePage.clickBunsButton();
-            homePage.getBunsHeader().hover().shouldBe(Condition.visible);
+            homePage.getBunsButton().shouldHave(cssClass("tab_tab_type_current__2BEPc"));
 
         }
 
@@ -38,7 +39,7 @@ public class ConstructorTest {
                         HomePage.class);
 
         homePage.clickSaucesButton();
-        homePage.getSaucesHeader().hover().shouldBe(Condition.visible);
+        homePage.getSaucesButton().shouldHave(cssClass("tab_tab_type_current__2BEPc"));
 
     }
 
@@ -50,10 +51,8 @@ public class ConstructorTest {
                         HomePage.class);
 
         homePage.clickIngredientsButton();
-       // sleep(5000);
+        homePage.getIngredientsButton().shouldHave(cssClass("tab_tab_type_current__2BEPc"));
 
-        Point header = homePage.getIngredientsHeader().getLocation();
-        System.out.println(header.getY());
 
     }
 

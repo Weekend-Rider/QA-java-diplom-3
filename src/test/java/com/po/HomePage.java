@@ -53,6 +53,11 @@ public class HomePage {
         bunsButton.click();
     }
 
+    //поиск кнопки "Булки"
+    public SelenideElement getBunsButton() {
+        return bunsButton;
+    }
+
     //поиск заголовка "Булки"
     public SelenideElement getBunsHeader() {
         return bunsHeader;
@@ -63,6 +68,11 @@ public class HomePage {
         saucesButton.click();
     }
 
+    //поиск кнопки "Соусы"
+    public SelenideElement getSaucesButton() {
+        return saucesButton;
+    }
+
     //поиск заголовка "Соусы"
     public SelenideElement getSaucesHeader() {
         return saucesHeader;
@@ -70,6 +80,11 @@ public class HomePage {
 
     //клик по кнопке "Начинки"
     public void clickIngredientsButton() { ingredientsButton.click(); }
+
+    //поиск кнопки "Соусы"
+    public SelenideElement getIngredientsButton() {
+        return ingredientsButton;
+    }
 
     //поиск заголовка "Начинки"
     public SelenideElement getIngredientsHeader() { return ingredientsHeader; }
