@@ -1,17 +1,38 @@
 package com.test;
 
-import com.codeborne.selenide.Condition;
 import com.po.*;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Point;
-
-import java.time.Duration;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import io.qameta.allure.junit4.DisplayName;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
+@RunWith(Parameterized.class)
+
 public class ConstructorTest {
+
+    private final String driver;
+
+    public ConstructorTest(String driver) {
+        this.driver = driver;
+    }
+
+    @Parameterized.Parameters
+    public static Object[][] getDriver() {
+        return new Object[][] {
+                { "src/resources/yandexdriver.exe" },
+                { "src/resources/chromedriver.exe"}
+        };
+    }
+
+        @Before
+        public void setDriver() {
+            System.setProperty("webdriver.chrome.driver", driver);
+        }
 
         @After
         public void tearDown() {
@@ -19,6 +40,7 @@ public class ConstructorTest {
         }
 
         @Test
+        @DisplayName("Проверка перехода к разделу Булки")
         public void checkScrollToBunsTest() {
 
             HomePage homePage =
@@ -32,6 +54,7 @@ public class ConstructorTest {
         }
 
     @Test
+    @DisplayName("Проверка перехода к разделу Соусы")
     public void checkScrollToSaucesTest() {
 
         HomePage homePage =
@@ -44,6 +67,7 @@ public class ConstructorTest {
     }
 
     @Test
+    @DisplayName("Проверка перехода к разделу Начинки")
     public void checkScrollToIngredientsTest() {
 
         HomePage homePage =

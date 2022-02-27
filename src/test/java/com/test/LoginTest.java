@@ -1,25 +1,54 @@
 package com.test;
 
 import com.UserOperations;
+import com.model.Tokens;
 import com.po.*;
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-import static org.junit.Assert.assertTrue;
+
+@RunWith(Parameterized.class)
 
 public class LoginTest {
 
-        UserOperations userOperations = new UserOperations();
+        UserOperations userOperations;
+
+        private final String driver;
+
+        public LoginTest(String driver) {
+            this.driver = driver;
+        }
+
+        @Parameterized.Parameters
+        public static Object[][] getDriver() {
+            return new Object[][] {
+                    { "src/resources/yandexdriver.exe" },
+                    { "src/resources/chromedriver.exe"}
+            };
+        }
+
+        @Before
+        public void setDriver() {
+            System.setProperty("webdriver.chrome.driver", driver);
+
+            userOperations = new UserOperations();
+        }
 
         @After
         public void tearDown() {
             userOperations.delete();
+            Tokens.clearTokens();
             closeWebDriver();
         }
 
         @Test
+        @DisplayName("Проверка авторизации после клика по кнопке Войти в аккаунт")
         public void checkCustomerLoginByToAccountButtonTest() {
 
             HomePage homePage =
@@ -40,6 +69,7 @@ public class LoginTest {
         }
 
     @Test
+    @DisplayName("Проверка авторизации после клика по кнопке Личный кабинет на главной")
     public void checkCustomerLoginByHeaderAccountButtonTest() {
 
         HomePage homePage =
@@ -59,6 +89,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Проверка авторизации после клика по кнопке Войти на странице регистрации")
     public void checkCustomerLoginByRegistrationPageLoginButtonTest() {
 
         RegistrationPage registrationPage =
@@ -80,6 +111,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Проверка авторизации после клика по кнопке Войти на странице восстановления пароля")
     public void checkCustomerLoginByRestorePasswordPageLoginButtonTest() {
 
         RestorePasswordPage restorePasswordPage =

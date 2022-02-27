@@ -2,26 +2,55 @@ package com.test;
 
 import com.UserOperations;
 import com.codeborne.selenide.WebDriverRunner;
+import com.model.Tokens;
 import com.po.*;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import io.qameta.allure.junit4.DisplayName;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-import static com.codeborne.selenide.Condition.value;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.Assert.assertEquals;
 
+@RunWith(Parameterized.class)
+
 public class AccountTest {
 
-        UserOperations userOperations = new UserOperations();
+        UserOperations userOperations;
+
+        private final String driver;
+
+        public AccountTest(String driver) {
+            this.driver = driver;
+        }
+
+        @Parameterized.Parameters
+        public static Object[][] getDriver() {
+            return new Object[][] {
+                    { "src/resources/yandexdriver.exe" },
+                    { "src/resources/chromedriver.exe"}
+            };
+        }
+
+        @Before
+        public void setDriver() {
+            System.setProperty("webdriver.chrome.driver", driver);
+
+            userOperations = new UserOperations();
+        }
 
         @After
         public void tearDown() {
             userOperations.delete();
+            Tokens.clearTokens();
             closeWebDriver();
         }
 
         @Test
+        @DisplayName("Проверка открытия ЛК при клике на кнопку Личный кабинет в шапке на главной")
         public void checkClickHeaderAccountButtonOpensAccountPageTest() {
 
             LoginPage loginPage =
@@ -43,6 +72,7 @@ public class AccountTest {
         }
 
     @Test
+    @DisplayName("Проверка открытия главной страницы при клике на кнопку Конструктор в ЛК")
     public void checkClickConstructorButtonOpensHomePage() {
 
         LoginPage loginPage =
@@ -64,6 +94,7 @@ public class AccountTest {
     }
 
     @Test
+    @DisplayName("Проверка открытия главной страницы при клике на логотип в ЛК")
     public void checkClickHeaderLogoOpensHomePage() {
 
         LoginPage loginPage =
@@ -85,6 +116,7 @@ public class AccountTest {
     }
 
     @Test
+    @DisplayName("Проверка выхода при клике на кнопку Выход в ЛК")
     public void checkClickExitButtonTestLogoutUser() {
 
         LoginPage loginPage =

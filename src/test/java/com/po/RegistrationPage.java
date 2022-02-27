@@ -1,7 +1,6 @@
 package com.po;
 
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.ElementsCollection;
 
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;

@@ -59,7 +59,6 @@ public class UserOperations {
             Tokens.setAccessToken(response.getAccessToken().substring(7));
             Tokens.setRefreshToken(response.getRefreshToken());
         }
-        System.out.println(responseData);
         return responseData;
     }
 
@@ -88,13 +87,11 @@ public class UserOperations {
         return user;
     }
 
-    public Map<String, String> login(String email, String password) {
-        // создаём и заполняем мапу для передачи трех параметров в тело запроса
+    public void login(String email, String password) {
         Map<String, String> inputDataMap = new HashMap<>();
         inputDataMap.put("email", email);
         inputDataMap.put("password", password);
 
-        // отправляем запрос на регистрацию пользователя и десериализуем ответ в переменную response
         UserRegisterResponse response = given()
                 .spec(Base.getBaseSpec())
                 .and()
@@ -104,21 +101,17 @@ public class UserOperations {
                 .body()
                 .as(UserRegisterResponse.class);
 
-        // возвращаем мапу с данными
         Map<String, String> responseData = new HashMap<>();
         if (response != null) {
             responseData.put("email", response.getUser().getEmail());
             responseData.put("password", password);
 
-            // токен, нужный для удаления пользователя, кладем в статическое поле класса с токенами
-            // убираем слово Bearer в начале токена
-            // так же запоминаем refreshToken
             Tokens.setAccessToken(response.getAccessToken().substring(7));
             Tokens.setRefreshToken(response.getRefreshToken());
 
             Success.setSuccess(response.isSuccess());
         }
-        return responseData;
+        //return responseData;
     }
 
 }
