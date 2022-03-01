@@ -7,6 +7,8 @@ import org.openqa.selenium.support.How;
 
 public class AccountPage {
 
+    public static final String ACCOUNT_PROFILE_PAGE_URL = "https://stellarburgers.nomoreparties.site/account/profile";
+
     //кнопка "Профиль"
     @FindBy(how = How.XPATH, using = ".//a[text()='Профиль']")
     private SelenideElement profileButton;

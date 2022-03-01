@@ -8,6 +8,7 @@ import org.openqa.selenium.support.How;
 public class HomePage {
 
     public static final String HOME_PAGE_URL = "https://stellarburgers.nomoreparties.site";
+    public static final String HOME_PAGE_URL_ASSERT = "https://stellarburgers.nomoreparties.site/";
 
     //кнопка "Личный кабинет"
     @FindBy(how = How.XPATH, using = ".//a[@href='/account']")

@@ -36,9 +36,6 @@ public class LoginPage {
 
         Map<String, String> userData = userOperations.register();
 
-        System.out.println(userData.get("password"));
-        System.out.println(userData.get("email"));
-
         emailInputField.setValue(userData.get("email"));
         passwordInputField.setValue(userData.get("password"));
 

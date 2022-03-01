@@ -67,7 +67,7 @@ public class AccountTest {
             accountPage.getProfileButton().shouldBe(visible);
 
             String actualUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-            assertEquals("https://stellarburgers.nomoreparties.site/account/profile", actualUrl);
+            assertEquals(AccountPage.ACCOUNT_PROFILE_PAGE_URL, actualUrl);
 
         }
 
@@ -89,7 +89,7 @@ public class AccountTest {
         accountPage.clickConstructorButton();
 
         String actualUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-        assertEquals("https://stellarburgers.nomoreparties.site/", actualUrl);
+        assertEquals(HomePage.HOME_PAGE_URL_ASSERT, actualUrl);
 
     }
 
@@ -111,7 +111,7 @@ public class AccountTest {
         accountPage.clickHeaderLogo();
 
         String actualUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-        assertEquals("https://stellarburgers.nomoreparties.site/", actualUrl);
+        assertEquals(HomePage.HOME_PAGE_URL_ASSERT, actualUrl);
 
     }
 
@@ -135,7 +135,7 @@ public class AccountTest {
         loginPage.clickHeaderAccountButton();
 
         String actualUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-        assertEquals("https://stellarburgers.nomoreparties.site/login", actualUrl);
+        assertEquals(LoginPage.LOGIN_PAGE_URL, actualUrl);
 
     }
 
