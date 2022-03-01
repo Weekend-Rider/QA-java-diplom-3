@@ -1,6 +1,7 @@
 package com.po;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
@@ -27,26 +28,31 @@ public class AccountPage {
     private SelenideElement emailField;
 
     //поиск поля "email"
+    @Step("Поиск поля email на странице ЛК")
     public SelenideElement getEmailField() {
         return emailField;
     }
 
     //поиск кнопки "Профиль"
+    @Step("Поиск кнопки Профиль на странице ЛК")
     public SelenideElement getProfileButton() {
         return profileButton;
     }
 
     //клик по кнопке "Конструктор"
+    @Step("Клик по кнопке Конструктор на странице ЛК")
     public void clickConstructorButton() {
         constructorButton.click();
     }
 
     //клик по логотипу
+    @Step("Клик по логотипу на странице ЛК")
     public void clickHeaderLogo() {
         headerLogo.click();
     }
 
     //клик по кнопке "Выход"
+    @Step("Клик по кнопке Выход")
     public void clickLogoutButton() {
         logoutButton.click();
     }

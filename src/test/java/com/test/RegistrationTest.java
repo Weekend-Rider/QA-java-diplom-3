@@ -51,7 +51,7 @@ public class RegistrationTest {
         }
 
         @Test
-        @DisplayName("Проверка регистарции покупателя")
+        @DisplayName("Проверка регистрации покупателя")
         public void checkCustomerRegistrationTest() {
             RegistrationPage registrationPage =
                     open(RegistrationPage.REGISTRATION_PAGE_URL,
@@ -59,7 +59,6 @@ public class RegistrationTest {
 
             User credentials = userOperations.generateUser();
 
-            System.out.println(credentials.getEmail() + credentials.getPassword());
             registrationPage.fillRegistrationForm(credentials.getName(), credentials.getEmail(), credentials.getPassword());
             registrationPage.clickRegisterButton();
 

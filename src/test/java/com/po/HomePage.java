@@ -1,6 +1,7 @@
 package com.po;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
@@ -41,37 +42,45 @@ public class HomePage {
     private SelenideElement ingredientsHeader;
 
     //клик по кнопке "Войти в аккаунт"
+    @Step("Клик по кнопке Войти в аккаунт на главной")
     public void clickToAccountButton() {
         toAccountButton.click();
     }
 
     //клик по кнопке "Личный кабинет" в шапке
+    @Step("Клик по кнопке Личный кабинет в шапке на главной")
     public void clickHeaderAccountButton() { headerAccountButton.click(); }
 
     //клик по кнопке "Булки"
+    @Step("Клик по кнопке Булки в конструкторе на главной")
     public void clickBunsButton() {
         bunsButton.click();
     }
 
     //поиск кнопки "Булки"
+    @Step("Клик по кнопке Булки в конструкторе на главной")
     public SelenideElement getBunsButton() {
         return bunsButton;
     }
 
-    //клик по кнопке "Соусы"
+    //клик по кнопке "Соусы в конструкторе"
+    @Step("Клик по кнопке Соусы на главной")
     public void clickSaucesButton() {
         saucesButton.click();
     }
 
     //поиск кнопки "Соусы"
+    @Step("Клик кнопки Соусы в конструкторе на главной")
     public SelenideElement getSaucesButton() {
         return saucesButton;
     }
 
     //клик по кнопке "Начинки"
+    @Step("Клик по кнопке Начинки в конструкторе на главной")
     public void clickIngredientsButton() { ingredientsButton.click(); }
 
     //поиск кнопки "Соусы"
+    @Step("Поиск кнопки Соусы в конструкторе на главной")
     public SelenideElement getIngredientsButton() {
         return ingredientsButton;
     }

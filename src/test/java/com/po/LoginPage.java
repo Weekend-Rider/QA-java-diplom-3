@@ -2,6 +2,7 @@ package com.po;
 
 import com.UserOperations;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
@@ -28,6 +29,7 @@ public class LoginPage {
     private SelenideElement headerAccountButton;
 
     //заполнение формы авторизации
+    @Step("Заполнение формы авторизации")
     public String fillLoginForm() {
 
         UserOperations userOperations = new UserOperations();
@@ -44,11 +46,13 @@ public class LoginPage {
     }
 
     //клик по кнопке "Войти"
+    @Step("Клик по кнопке Войти на странице авторизации")
     public void clickLoginButton() {
         loginButton.click();
     }
 
     //клик по кнопке "Личный кабинет"
+    @Step("Клик по кнопке Личный кабинет на странице авторизации")
     public void clickHeaderAccountButton() {
         headerAccountButton.click();
     }

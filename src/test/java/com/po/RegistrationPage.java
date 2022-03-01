@@ -2,6 +2,7 @@ package com.po;
 
 import com.codeborne.selenide.SelenideElement;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
@@ -34,6 +35,7 @@ public class RegistrationPage {
     private SelenideElement loginButton;
 
     //заполнение формы регистрации
+    @Step("Заполнение формы регистрации")
     public void fillRegistrationForm(String name, String email, String password) {
 
         nameInputField.setValue(name);
@@ -42,16 +44,19 @@ public class RegistrationPage {
     }
 
     //клик по кнопке "Зарегистрироваться"
+    @Step("Клик по кнопке Зарегистрироваться на старнице регистрации")
     public void clickRegisterButton() {
         registerButton.click();
     }
 
     //поиск элемента с текстом ошибки "некорректный пароль"
+    @Step("Поиск элемента с текстом ошибки на старнице регистрации")
     public SelenideElement getPasswordErrorMessage() {
         return passwordErrorMessage;
     }
 
     //клик по кнопке "Войти"
+    @Step("Клик по кнопке Войти на старнице регистрации")
     public void clickLoginButton() {
         loginButton.click();
     }
