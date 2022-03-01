@@ -1,7 +1,10 @@
 package com;
 
+import com.model.Success;
 import com.model.Tokens;
+import com.model.User;
 import com.model.UserRegisterResponse;
+import io.qameta.allure.Step;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.HashMap;
@@ -18,6 +21,7 @@ public class UserOperations {
      возвращает мапу с данными: имя, пароль, имэйл
      если регистрация не удалась, возвращает пустую мапу
      */
+    @Step("Регистрация пользователя по api")
     public Map<String, String> register() {
 
         // с помощью библиотеки RandomStringUtils генерируем имэйл
@@ -64,6 +68,7 @@ public class UserOperations {
      метод удаления пользователя по токену, возвращенному после создания
      пользователя. Удаляем только в случае, если token заполнен.
      */
+    @Step("Удаление пользователя по api")
     public void delete() {
         if (Tokens.getAccessToken() == null) {
             return;
@@ -75,6 +80,41 @@ public class UserOperations {
                 .delete("auth/user")
                 .then()
                 .statusCode(202);
+    }
+    @Step("Создание учетных данных пользователя")
+    public User generateUser(){
+        User user = new User();
+        user.setEmail(RandomStringUtils.randomAlphabetic(10) + EMAIL_POSTFIX);
+        user.setPassword(RandomStringUtils.randomAlphabetic(10));
+        user.setName(RandomStringUtils.randomAlphabetic(10));
+        return user;
+    }
+
+    @Step("Авторизация пользователя по api")
+    public void login(String email, String password) {
+        Map<String, String> inputDataMap = new HashMap<>();
+        inputDataMap.put("email", email);
+        inputDataMap.put("password", password);
+
+        UserRegisterResponse response = given()
+                .spec(Base.getBaseSpec())
+                .and()
+                .body(inputDataMap)
+                .when()
+                .post("auth/login")
+                .body()
+                .as(UserRegisterResponse.class);
+
+        Map<String, String> responseData = new HashMap<>();
+        if (response != null) {
+            responseData.put("email", response.getUser().getEmail());
+            responseData.put("password", password);
+
+            Tokens.setAccessToken(response.getAccessToken().substring(7));
+            Tokens.setRefreshToken(response.getRefreshToken());
+
+            Success.setSuccess(response.isSuccess());
+        }
     }
 
 }
